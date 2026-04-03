@@ -890,6 +890,791 @@ body {
 }
 
 /* ============================================
+   Hero Background Effects
+   ============================================ */
+
+.hero-bg-effects {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.hero-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.4;
+}
+
+.hero-glow-1 {
+    width: 500px;
+    height: 500px;
+    background: rgba(79, 125, 249, 0.15);
+    top: -100px;
+    left: -100px;
+    animation: glowFloat1 12s ease-in-out infinite;
+}
+
+.hero-glow-2 {
+    width: 400px;
+    height: 400px;
+    background: rgba(139, 92, 246, 0.12);
+    bottom: -80px;
+    right: -80px;
+    animation: glowFloat2 15s ease-in-out infinite;
+}
+
+.hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(79, 125, 249, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79, 125, 249, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+}
+
+@keyframes glowFloat1 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(60px, 40px); }
+}
+
+@keyframes glowFloat2 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-40px, -60px); }
+}
+
+/* ============================================
+   Workshop Overlay
+   ============================================ */
+
+.workshop-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.workshop-overlay.active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Workshop Topbar */
+.workshop-topbar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 24px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+    position: relative;
+}
+
+.workshop-back-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.workshop-back-btn:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-blue);
+}
+
+.workshop-topbar-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.workshop-phase-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.workshop-duration-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.workshop-topbar-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(255,255,255,0.05);
+}
+
+.workshop-topbar-progress-fill {
+    height: 100%;
+    background: var(--gradient-main);
+    width: 0%;
+    transition: width 0.2s ease;
+}
+
+/* Workshop Scroll Container */
+.workshop-scroll-container {
+    flex: 1;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+.workshop-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+}
+
+/* Workshop Header */
+.workshop-header {
+    margin-bottom: 40px;
+}
+
+.workshop-header h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+.workshop-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.workshop-difficulty {
+    display: flex;
+    gap: 4px;
+}
+
+.workshop-difficulty-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--border-color);
+}
+
+.workshop-difficulty-dot.filled {
+    background: var(--accent-blue);
+}
+
+.workshop-objectives {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+}
+
+.workshop-objectives h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.workshop-objectives ul {
+    list-style: none;
+    padding: 0;
+}
+
+.workshop-objectives li {
+    padding: 6px 0;
+    padding-left: 24px;
+    position: relative;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.workshop-objectives li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent-green);
+    font-weight: 700;
+}
+
+/* Workshop Bottombar */
+.workshop-bottombar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.workshop-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.workshop-nav-btn:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-blue);
+}
+
+.workshop-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.workshop-complete-btn {
+    padding: 10px 24px;
+    background: var(--gradient-main);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: var(--transition);
+    box-shadow: 0 4px 16px rgba(79, 125, 249, 0.3);
+}
+
+.workshop-complete-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(79, 125, 249, 0.4);
+}
+
+.workshop-complete-btn.completed {
+    background: var(--accent-green);
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+}
+
+/* ============================================
+   Workshop Content Sections
+   ============================================ */
+
+.workshop-section {
+    margin-bottom: 36px;
+}
+
+/* Theory Blocks */
+.workshop-theory {
+    padding: 24px 28px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+}
+
+.workshop-theory h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+
+.workshop-theory p,
+.workshop-theory li {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-size: 0.95rem;
+}
+
+.workshop-theory ul,
+.workshop-theory ol {
+    padding-left: 24px;
+    margin: 12px 0;
+}
+
+.workshop-theory li {
+    margin-bottom: 6px;
+}
+
+.workshop-theory strong {
+    color: var(--text-primary);
+}
+
+.workshop-theory code {
+    background: rgba(79, 125, 249, 0.1);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: var(--font-code);
+    font-size: 0.85em;
+    color: var(--accent-blue);
+}
+
+/* Code Blocks */
+.workshop-code-block {
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+}
+
+.workshop-code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: rgba(0,0,0,0.3);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.workshop-code-lang {
+    font-family: var(--font-code);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.workshop-code-copy {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.workshop-code-copy:hover {
+    background: var(--bg-card-hover);
+    color: var(--text-primary);
+}
+
+.workshop-code-copy.copied {
+    border-color: var(--accent-green);
+    color: var(--accent-green);
+}
+
+.workshop-code-body {
+    padding: 20px;
+    overflow-x: auto;
+    font-family: var(--font-code);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+    tab-size: 4;
+}
+
+.workshop-code-body pre {
+    margin: 0;
+    white-space: pre;
+}
+
+.workshop-code-explanation {
+    padding: 14px 20px;
+    background: rgba(79, 125, 249, 0.05);
+    border-top: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    line-height: 1.7;
+}
+
+/* Syntax Highlighting */
+.token-keyword { color: #c678dd; }
+.token-string { color: #98c379; }
+.token-comment { color: #5c6370; font-style: italic; }
+.token-function { color: #61afef; }
+.token-number { color: #d19a66; }
+.token-operator { color: #56b6c2; }
+.token-class { color: #e5c07b; }
+.token-tag { color: #e06c75; }
+.token-attr { color: #d19a66; }
+.token-value { color: #98c379; }
+
+/* Info / Callout Blocks */
+.workshop-callout {
+    padding: 18px 22px;
+    border-radius: var(--radius);
+    border-left: 4px solid;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+.workshop-callout-icon {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.workshop-callout-content {
+    flex: 1;
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+}
+
+.workshop-callout.tip {
+    background: rgba(16, 185, 129, 0.06);
+    border-color: var(--accent-green);
+}
+
+.workshop-callout.warning {
+    background: rgba(245, 158, 11, 0.06);
+    border-color: var(--accent-orange);
+}
+
+.workshop-callout.note {
+    background: rgba(79, 125, 249, 0.06);
+    border-color: var(--accent-blue);
+}
+
+/* Quiz Blocks */
+.workshop-quiz {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 24px;
+}
+
+.workshop-quiz-question {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 10px;
+}
+
+.workshop-quiz-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: rgba(139, 92, 246, 0.15);
+    color: var(--accent-purple);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.workshop-quiz-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.workshop-quiz-choice {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.92rem;
+}
+
+.workshop-quiz-choice:hover {
+    border-color: rgba(79, 125, 249, 0.4);
+    background: rgba(79, 125, 249, 0.05);
+}
+
+.workshop-quiz-choice-letter {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: var(--bg-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+}
+
+.workshop-quiz-choice.selected {
+    border-color: var(--accent-blue);
+    background: rgba(79, 125, 249, 0.08);
+}
+
+.workshop-quiz-choice.correct {
+    border-color: var(--accent-green);
+    background: rgba(16, 185, 129, 0.08);
+}
+
+.workshop-quiz-choice.correct .workshop-quiz-choice-letter {
+    background: var(--accent-green);
+    color: white;
+}
+
+.workshop-quiz-choice.incorrect {
+    border-color: var(--accent-red);
+    background: rgba(239, 68, 68, 0.08);
+}
+
+.workshop-quiz-choice.incorrect .workshop-quiz-choice-letter {
+    background: var(--accent-red);
+    color: white;
+}
+
+.workshop-quiz-choice.disabled {
+    pointer-events: none;
+}
+
+.workshop-quiz-submit {
+    padding: 10px 24px;
+    background: var(--accent-purple);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.workshop-quiz-submit:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.workshop-quiz-submit:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.workshop-quiz-explanation {
+    margin-top: 16px;
+    padding: 14px 18px;
+    background: rgba(16, 185, 129, 0.06);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    display: none;
+}
+
+.workshop-quiz-explanation.visible {
+    display: block;
+}
+
+.workshop-quiz-result {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.workshop-quiz-result.correct {
+    color: var(--accent-green);
+}
+
+.workshop-quiz-result.incorrect {
+    color: var(--accent-red);
+}
+
+/* Exercise Blocks */
+.workshop-exercise {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.workshop-exercise-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 24px;
+    background: rgba(245, 158, 11, 0.06);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.workshop-exercise-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 12px;
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--accent-orange);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.workshop-exercise-title {
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+
+.workshop-exercise-body {
+    padding: 24px;
+}
+
+.workshop-exercise-instructions {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.workshop-exercise-instructions code {
+    background: rgba(79, 125, 249, 0.1);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: var(--font-code);
+    font-size: 0.85em;
+    color: var(--accent-blue);
+}
+
+.workshop-exercise-starter {
+    margin-bottom: 16px;
+}
+
+.workshop-exercise-starter-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.workshop-exercise-solution-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: var(--transition);
+    width: 100%;
+}
+
+.workshop-exercise-solution-toggle:hover {
+    background: var(--bg-card-hover);
+    color: var(--text-primary);
+}
+
+.workshop-exercise-solution-toggle svg {
+    transition: transform 0.3s ease;
+}
+
+.workshop-exercise-solution-toggle.open svg {
+    transform: rotate(90deg);
+}
+
+.workshop-exercise-solution {
+    margin-top: 12px;
+    display: none;
+}
+
+.workshop-exercise-solution.visible {
+    display: block;
+}
+
+/* ============================================
+   Toast Notifications
+   ============================================ */
+
+.toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 3000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    animation: toastIn 0.4s ease, toastOut 0.3s ease 2.7s forwards;
+    max-width: 360px;
+}
+
+.toast-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.toast.success {
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.toast.info {
+    border-color: rgba(79, 125, 249, 0.3);
+}
+
+@keyframes toastIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes toastOut {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+}
+
+/* ============================================
    Responsive Design
    ============================================ */
 
@@ -986,6 +1771,54 @@ body {
     .phase-tab {
         padding: 8px 12px;
         font-size: 0.75rem;
+    }
+
+    /* Workshop responsive */
+    .workshop-content {
+        padding: 24px 16px 60px;
+    }
+
+    .workshop-header h1 {
+        font-size: 1.6rem;
+    }
+
+    .workshop-topbar {
+        padding: 10px 16px;
+    }
+
+    .workshop-bottombar {
+        padding: 10px 12px;
+        gap: 8px;
+    }
+
+    .workshop-nav-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+
+    .workshop-complete-btn {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+    }
+
+    .workshop-meta {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .workshop-code-body {
+        font-size: 0.8rem;
+        padding: 14px;
+    }
+
+    .toast-container {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+    }
+
+    .toast {
+        max-width: 100%;
     }
 }
 
